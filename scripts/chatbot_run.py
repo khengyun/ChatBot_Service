@@ -21,7 +21,7 @@ def read_des(desc_path: str = "data/desc_summ.txt"):
 
 def initialize_chatbot():
     # Initialize chatbot, input prompt and get response
-    model = ChatBot(model_id="llama3")
+    model = ChatBot(model_id="llama3.1")
     
     return model
 

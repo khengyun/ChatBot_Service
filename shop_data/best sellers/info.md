@@ -47,7 +47,7 @@
     "description": "Spaghetti Carbonara Ý, mì spaghetti với trứng, phô mai (thường là Pecorino Romano), pancetta và tiêu đen.",
     "price": "176,250 VND",
     "rating": 4,
-    "links": food_image_database/pastacarbonara.jpg
+    "links": food_image_database/spaghetticarbonara.jpg
   },
   {
     "name": "Hamburger",

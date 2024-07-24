@@ -54,20 +54,26 @@ def bot(history, message):
         sources.append(id)
         links += link.split(',')
         names += name.split(',')
+    links = list(dict.fromkeys(links))
+    names = list(dict.fromkeys(names))
 
+    print(links)
+    print(names)
+    
     history[-1][1] += f"\n\nSources: {sources}"
-    history += [[
-        None, 
-        gr.Gallery(
-            [
-                [link, title] for link, title in zip(set(links), set(names))
-            ],
-            columns=5,  
-            rows=1,     
-            object_fit="contain", 
-            height="auto"
-        )
-    ]]
+    if len(names) > 0:
+        history += [[
+            None, 
+            gr.Gallery(
+                [
+                    [link, title] for link, title in zip(links, names)
+                ],
+                columns=5,  
+                rows=1,     
+                object_fit="contain", 
+                height="auto"
+            )
+        ]]
     
     yield history, gr.MultimodalTextbox(value=None, interactive=True)
 
@@ -108,7 +114,8 @@ with gr.Blocks(title="K&K's Bot", fill_height=True) as demo:
     chatbot.like(print_like_dislike, None, None)
 
 demo.queue()
+
 if __name__ == "__main__":
     demo.launch(
-        #share=True
+        share=True
     )

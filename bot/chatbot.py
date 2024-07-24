@@ -95,7 +95,7 @@ class ChatBot:
         self.chat_model = ChatOllama(model=self.model_id, temperature=0.2, top_k=10, top_p=0.5)
 
         self.trimmer = trim_messages(
-            max_tokens=8000,
+            max_tokens=20000,
             strategy="last",
             token_counter=self.chat_model,
             include_system=True,

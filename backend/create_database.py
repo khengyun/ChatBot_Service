@@ -1,4 +1,4 @@
-import os
+import re
 
 from langchain_community.document_loaders import DirectoryLoader, PyPDFDirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter, CharacterTextSplitter
@@ -7,7 +7,7 @@ from langchain_community.vectorstores import Chroma
 
 from utility import get_embedding_function
 
-CHROMA_PATH = "food_database"
+CHROMA_PATH = "food_database3"
 DATA_PATH = "shop_data"
 
 def calculate_chunk_ids(chunks):
@@ -21,8 +21,7 @@ def calculate_chunk_ids(chunks):
 
     for chunk in chunks:
         source = chunk.metadata.get("source")
-        page = chunk.metadata.get("page")
-        current_page_id = f"{source}:{page}"
+        current_page_id = source
 
         # If the page ID is the same as the last one, increment the index.
         if current_page_id == last_page_id:
@@ -44,16 +43,6 @@ def add_to_chroma(chunks: list[Document]):
     db = Chroma(
         persist_directory=CHROMA_PATH, embedding_function=get_embedding_function(), collection_metadata={"hnsw:space": "cosine"}
     )
-    # The storage layer for the parent documents
-    # store = InMemoryStore()
-    # id_key = "doc_id"
-
-    # The retriever (empty to start)
-    # retriever = MultiVectorRetriever(
-    #     vectorstore=vectorstore,
-    #     docstore=store,
-    #     id_key=id_key,
-    # )
     
     # Calculate Page IDs.
     chunks_with_ids = calculate_chunk_ids(chunks)
@@ -77,6 +66,19 @@ def add_to_chroma(chunks: list[Document]):
     else:
         print("No new documents to add")
 
+def extract_link(chunk_text):
+    # Extract and remove links
+    name_pattern = re.compile(r'"name":\s*"([^"]+)"')
+    link_pattern = re.compile(r'"links":\s*([\w/\.]+)')
+    link = link_pattern.findall(chunk_text)
+    name = name_pattern.findall(chunk_text)
+
+    # Remove the links from the chunk_text
+    chunk_text_without_link = link_pattern.sub('', chunk_text)
+
+    chunk_text_without_link = re.sub(r'\s*(\n|$)', '', chunk_text_without_link)
+
+    return ','.join(name), ','.join(link), chunk_text_without_link
 
 def split_text(documents: list[Document]):
     # Split documents into chunks
@@ -86,10 +88,17 @@ def split_text(documents: list[Document]):
     #     length_function = len,
     #     add_start_index = True,
     # )
-    text_splitter = CharacterTextSplitter(separator=',\n\n', chunk_size=200, chunk_overlap=0)
+    text_splitter = CharacterTextSplitter(separator=',\n\n', chunk_size=250, chunk_overlap=0)
     chunks = text_splitter.split_documents(documents)
     print(f"Split {len(documents)} documents into {len(chunks)} chunks.")
+    for chunk in chunks:
+        name, link, new_content = extract_link(chunk.page_content)
+        chunk.page_content = new_content
 
+        # Assign new metadata
+        chunk.metadata['name'] = name
+        chunk.metadata['link'] = link
+        
     return chunks
 
 

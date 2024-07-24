@@ -3,7 +3,10 @@ import torch
 from langchain_huggingface import HuggingFaceEmbeddings
 
 def get_embedding_function():
-    model_name = "sentence-transformers/all-MiniLM-L6-v2"
+    # model_name = "sentence-transformers/all-MiniLM-L6-v2"
+    # model_name = "google-bert/bert-base-multilingual-cased"
+    # model_name = "BAAI/bge-m3"
+    model_name = "sentence-transformers/all-MiniLM-L12-v2"
     model_kwargs = {'device': 'cuda' if torch.cuda.is_available() else 'cpu'}
     encode_kwargs = {'normalize_embeddings': False}
     embedding_function = HuggingFaceEmbeddings(

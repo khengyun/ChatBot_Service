@@ -1,3 +1,3 @@
-from .chatbot import MultiModalBot, ChatBot
+from .chatbot import ChatBot
 
-__all__ = [MultiModalBot, ChatBot]
+__all__ = [ChatBot]

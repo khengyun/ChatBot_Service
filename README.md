@@ -1,7 +1,7 @@
 # ChatBot
 
 ## Introduction 
-In this task, I will introduce how to leverage the power of LLMs with RAG. The results can be viewed on [Jira](https://inspire-lab.atlassian.net/browse/AFT-77). The **RAG code** has been modified from [this repo](https://github.com/pixegami/langchain-rag-tutorial) and the remaining code was entirely written by **Khôi**.
+In this task, I will introduce how to leverage the power of LLMs with RAG. The results can be viewed on [Jira](https://inspire-lab.atlassian.net/browse/AFT-77). The **RAG code** has been modified from [this repo](https://github.com/pixegami/langchain-rag-tutorial) and the remaining code was entirely written by **Khôi** and **Khang**.
 
 ## Install dependencies
 
@@ -23,20 +23,7 @@ In this task, I will introduce how to leverage the power of LLMs with RAG. The r
 pip install -r requirements.txt
 ```
 
-3. Install markdown depenendies with: 
-
-```python
-pip install "unstructured[all-docs]"
-```
-
-4. Install Tesseract for unstructured, follow guide [here](https://tesseract-ocr.github.io/tessdoc/Installation.html) for more information:
-
-```python
-sudo apt install tesseract-ocr
-sudo apt install libtesseract-dev
-```
-
-5. We are going to use Llama 3 available on Hugging Face. Therefore, requesting the [permission](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct) to use it and loging in hugging face before running is required. Replace `$HUGGINGFACE_TOKEN` with your token.
+3. We are going to use Llama 3 available on Hugging Face. Therefore, requesting the [permission](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct) to use it and loging in hugging face before running is required. Replace `$HUGGINGFACE_TOKEN` with your token.
 
 ```python
 pip install -U "huggingface_hub[cli]"
@@ -44,7 +31,7 @@ huggingface-cli login --token $HUGGINGFACE_TOKEN
 ```
 
 ## Create database
-Several example data located at `data`. You can add your custom data.
+Several example data located at `shop_data`. You can add your custom data.
 
 Create the Chroma DB.
 

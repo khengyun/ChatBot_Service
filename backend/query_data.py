@@ -6,7 +6,7 @@ from typing import List
 from langchain_community.vectorstores import Chroma
 from utility import get_embedding_function
 
-CHROMA_PATH = "food_database"
+CHROMA_PATH = "food_database3"
 
 def query_rag(query_text: str) -> str:
     # Prepare the DB.
@@ -15,7 +15,7 @@ def query_rag(query_text: str) -> str:
 
     context_text = ""
     # Search the DB.
-    results = db.similarity_search_with_relevance_scores(query_text, k=3, score_threshold=0.4)
+    results = db.similarity_search_with_relevance_scores(query_text, k=5, score_threshold=0.4)
     if len(results) == 0:
         print(f"Unable to find matching results. Continuing to use the bot's knowledge.")
         results = []

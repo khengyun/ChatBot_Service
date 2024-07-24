@@ -1,26 +1,11 @@
 import os
+import re
 import random
 import subprocess
 import gradio as gr
 
-from scripts.chatbot_run import get_final_response
-from utility.input_preprocess import get_file_type, extract_youtube_link, extract_img_link
-
-
-color_map = {
-    "harmful": "crimson",
-    "neutral": "gray",
-    "beneficial": "green",
-}
-
-def html_src(harm_level):
-    return f"""
-<div style="display: flex; gap: 5px;padding: 2px 4px;margin-top: -40px">
-  <div style="background-color: {color_map[harm_level]}; padding: 2px; border-radius: 5px;">
-  {harm_level}
-  </div>
-</div>
-"""
+from backend.query_data import query_rag
+from scripts.chatbot_run import initialize_chatbot
 
 def print_like_dislike(x: gr.LikeData):
     print(x.index, x.value, x.liked)
@@ -37,26 +22,82 @@ def bot(history, message):
     file_type = None
     file_path_list = message['files']
     user_prompt = message['text']
+    # Retrieve relevant context
+    context_text, retrieval_results  = query_rag(user_prompt)
 
-    response_source = get_final_response(query_text=user_prompt)
-    history += [(None,response_source)]
+    # Initialize chatbot then get response
+    chatbot = initialize_chatbot()
+    chatbot.get_prompt(
+            context_text, 
+            user_prompt, 
+            )
+    response_text = chatbot.get_response()
+    
+    # Update response in UI
+    history += [[None,next(response_text)]]
+    yield history, gr.MultimodalTextbox(value=None, interactive=True)
 
-    return history, gr.MultimodalTextbox(value=None, interactive=False)
+    for response in response_text:
+        history[-1][1] += response
+
+        yield history, gr.MultimodalTextbox(value=None, interactive=True)
+
+    # Result: Response + sources
+    sources = []
+    names, links = [], []
+    for doc, _score in retrieval_results:
+        # Get id, link, name metadata
+        id = doc.metadata.get("id", None)
+        link = doc.metadata.get("link", None)
+        name = doc.metadata.get("name", None)
+
+        sources.append(id)
+        links += link.split(',')
+        names += name.split(',')
+
+    history[-1][1] += f"\n\nSources: {sources}"
+    history += [[
+        None, 
+        gr.Gallery(
+            [
+                [link, title] for link, title in zip(set(links), set(names))
+            ],
+            columns=5,  
+            rows=1,     
+            object_fit="contain", 
+            height="auto"
+        )
+    ]]
+    
+    yield history, gr.MultimodalTextbox(value=None, interactive=True)
 
 
-with gr.Blocks(title="Koi's Bot", fill_height=True) as demo:
+with gr.Blocks(title="K&K's Bot", fill_height=True) as demo:
+    # Initialize chatbot interface
     chatbot = gr.Chatbot(
         elem_id="chatbot",
         bubble_full_width=False,
         scale=1,
     )
-
+    # Initialize textbox
     chat_input = gr.MultimodalTextbox(
         interactive=True,
         placeholder="Enter message or upload file...",
         show_label=False,
     )
-
+    # Input Example
+    examples = gr.Examples(
+        examples=[
+            {'text': "Thông tin cửa hàng", 'files': []},
+            {'text': "Menu bữa sáng", 'files': []},
+            {'text': "Menu trà chiều", 'files': []},
+            {'text': "Menu bữa tối", 'files': []},
+            {'text': "Những món bán chạy nhất!", 'files': []},
+        ],
+        inputs = chat_input,
+    )
+    
+    # Press Enter to send message
     chat_msg = chat_input.submit(
         add_message, [chatbot, chat_input], chatbot
     )
@@ -68,4 +109,6 @@ with gr.Blocks(title="Koi's Bot", fill_height=True) as demo:
 
 demo.queue()
 if __name__ == "__main__":
-    demo.launch(share=True)
+    demo.launch(
+        #share=True
+    )

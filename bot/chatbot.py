@@ -127,5 +127,4 @@ class ChatBot:
         #     config=config,
         # )
         store[session_id].messages = self.trimmer.invoke(store[session_id].messages)
-        print(store[session_id].messages)
         # return response.content

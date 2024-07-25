@@ -50,10 +50,11 @@ def bot(history, message):
         id = doc.metadata.get("id", None)
         link = doc.metadata.get("link", None)
         name = doc.metadata.get("name", None)
-
+        
         sources.append(id)
-        links += link.split(',')
-        names += name.split(',')
+        if link != '':
+            links += link.split(',')
+            names += name.split(',')
     links = list(dict.fromkeys(links))
     names = list(dict.fromkeys(names))
 

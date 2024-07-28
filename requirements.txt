@@ -1,15 +1,23 @@
 accelerate
 bitsandbytes
 python-dotenv==1.0.1 # For reading environment variables stored in .env file
+
+
 langchain==0.2.2
 langchain-community==0.2.3
 langchain-experimental==0.0.60
 langchain-huggingface==0.0.3
+langchain_community
+langchain_chroma
+
+
 huggingface-hub==0.23.3
+huggingface_hub[cli]
 
 chromadb==0.5.0 # Vector storage
 tiktoken==0.7.0  # For embeddings 
 pytest
 boto3
+unstructured[md]
 
 gradio

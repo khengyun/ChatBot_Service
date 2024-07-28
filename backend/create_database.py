@@ -1,4 +1,8 @@
-import re
+
+
+import re, os, sys
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, parent_dir)
 
 from langchain_community.document_loaders import DirectoryLoader, PyPDFDirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter, CharacterTextSplitter
@@ -7,7 +11,7 @@ from langchain_chroma import Chroma
 
 from utility import get_embedding_function
 
-CHROMA_PATH = "food_database3"
+CHROMA_PATH = "chromadb"
 DATA_PATH = "shop_data"
 
 def calculate_chunk_ids(chunks):

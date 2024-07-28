@@ -1,5 +1,6 @@
 .env
 chroma_*
+chromadb*
 chroma
 .DS_Store
 __pycache__/

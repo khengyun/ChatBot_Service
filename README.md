@@ -1,11 +1,16 @@
 # ChatBot
 
 ## Introduction 
-In this task, I will introduce how to leverage the power of LLMs with RAG. The results can be viewed on [Jira](https://inspire-lab.atlassian.net/browse/AFT-77). The **RAG code** has been modified from [this repo](https://github.com/pixegami/langchain-rag-tutorial) and the remaining code was entirely written by **Khôi** and **Khang**.
+In this project, we will develop an AI assistant to assist customers at a food store. The **RAG code** has been modified from [this repo](https://github.com/pixegami/langchain-rag-tutorial) and the remaining code was entirely written by **Khôi** and **Khang**.
 
 ## Install dependencies
 
-1. Do the following before installing the dependencies found in `requirements.txt` file because of current challenges installing `onnxruntime` through `pip install onnxruntime`. 
+1. Create an anaconda environment.
+```python
+conda create --name [environment-name] python=3.10.14
+```
+
+2. Do the following before installing the dependencies found in `requirements.txt` file because of current challenges installing `onnxruntime` through `pip install onnxruntime`. 
 
     - For MacOS users, a workaround is to first install `onnxruntime` dependency for `chromadb` using:
 
@@ -17,17 +22,21 @@ In this task, I will introduce how to leverage the power of LLMs with RAG. The r
      - For Windows users, follow the guide [here](https://github.com/bycloudai/InstallVSBuildToolsWindows?tab=readme-ov-file) to install the Microsoft C++ Build Tools. Be sure to follow through to the last step to set the enviroment variable path.
 
 
-2. Now run this command to install dependenies in the `requirements.txt` file. 
+3. Now run this command to install dependenies in the `requirements.txt` file. 
 
 ```python
 pip install -r requirements.txt
 ```
 
-3. We are going to use Llama 3 available on Hugging Face. Therefore, requesting the [permission](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct) to use it and loging in hugging face before running is required. Replace `$HUGGINGFACE_TOKEN` with your token.
+4. We are going to use Llama 3 available on Ollama. Install Ollama running this one-liner. Please refer [here](https://github.com/ollama/ollama?tab=readme-ov-file) for more information.
 
 ```python
-pip install -U "huggingface_hub[cli]"
-huggingface-cli login --token $HUGGINGFACE_TOKEN
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+Then run the following command to pull llama 3.1-8b-instruct model.
+```python
+ollama pull llama3.1
 ```
 
 ## Create database

@@ -11,8 +11,11 @@ from langchain_chroma import Chroma
 
 from utility import get_embedding_function
 
-CHROMA_PATH = "chromadb"
-DATA_PATH = "shop_data"
+from dotenv import load_dotenv
+load_dotenv()
+
+CHROMA_PATH = os.getenv("CHROMA_PATH")
+DATA_PATH = os.getenv("DATA_PATH")
 
 def calculate_chunk_ids(chunks):
     '''

@@ -5,8 +5,10 @@ from typing import List
 
 from langchain_chroma import Chroma
 from utility import get_embedding_function
+from dotenv import load_dotenv
+load_dotenv()
 
-CHROMA_PATH = "food_database3"
+CHROMA_PATH = os.getenv("CHROMA_PATH")
 
 def query_rag(query_text: str) -> str:
     # Prepare the DB.

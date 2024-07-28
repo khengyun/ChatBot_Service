@@ -1,4 +1,4 @@
-"menu": "Bữa tối 4: Hương vị quốc tế",
+"menu": "Menu bữa tối 4: Hương vị quốc tế",
 "items": [
     {
     "name": "Paella",

@@ -1,4 +1,4 @@
-"menu": "Bữa sáng 3: Món ngọt",
+"menu": "Menu bữa sáng 3: Món ngọt",
 "items": [
     {
     "name": "Pancakes",

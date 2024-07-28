@@ -574,12 +574,6 @@
 "links": food_image_database/nachos.jpg
 ,
 
-"name": "Không phải thực phẩm",
-"description": "Danh mục này chỉ các mục không phải là thực phẩm.",
-"price": "N/A",
-"links": food_image_database/nonfood.jpg
-,
-
 "name": "Omelette",
 "description": "Omelette, món trứng nấu chín với nhiều loại nhân như phô mai, rau và thịt.",
 "price": "105,750 VND",

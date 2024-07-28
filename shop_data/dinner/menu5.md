@@ -1,4 +1,4 @@
-"menu": "Bữa tối 5: Món chay",
+"menu": "Menu bữa tối 5: Món chay",
 "items": [
     {
     "name": "Salad Hy Lạp",

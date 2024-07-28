@@ -1,4 +1,4 @@
-"menu": "Bữa tối 2: Món hải sản",
+"menu": "Menu bữa tối 2: Món hải sản",
 "items": [
     {
     "name": "Cá Kho Tộ",

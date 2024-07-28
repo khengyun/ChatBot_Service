@@ -1,4 +1,4 @@
-"menu": "Bữa sáng 1: Đặc sản Việt Nam",
+"menu": "Menu bữa sáng 1: Đặc sản Việt Nam",
 "items": [
     {
     "name": "Bánh Cuốn",

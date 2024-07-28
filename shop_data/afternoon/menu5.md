@@ -1,4 +1,4 @@
-"menu": "Bữa trà chiều 5: Món tráng miệng đậm đà",
+"menu": "Menu trà chiều 5: Món tráng miệng đậm đà",
 "items": [
     {
     "name": "Bánh Cheesecake",

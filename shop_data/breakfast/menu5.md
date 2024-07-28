@@ -1,4 +1,4 @@
-"menu": "Bữa sáng 5: Đầy đủ protein",
+"menu": "Menu bữa sáng 5: Đầy đủ protein",
 "items": [
     {
     "name": "Sườn Non Nướng",

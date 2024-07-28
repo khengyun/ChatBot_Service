@@ -1,4 +1,4 @@
-"menu": "Bữa trà chiều 1: Ngọt và mặn",
+"menu": "Menu trà chiều 1: Ngọt và mặn",
 "items": [
     {
     "name": "Bánh Pía",

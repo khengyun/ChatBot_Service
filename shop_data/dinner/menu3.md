@@ -1,4 +1,4 @@
-"menu": "Bữa tối 3: Thịt",
+"menu": "Menu bữa tối 3: Thịt",
 "items": [
     {
     "name": "Sườn Heo",

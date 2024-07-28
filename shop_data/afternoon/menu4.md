@@ -1,4 +1,4 @@
-"menu": "Bữa trà chiều 4: Nhẹ nhàng và tươi mát",
+"menu": "Menu trà chiều 4: Nhẹ nhàng và tươi mát",
 "items": [
     {
     "name": "Salad Hy Lạp",

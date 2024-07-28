@@ -1,4 +1,4 @@
-"menu": "Bữa trà chiều 2: Món ăn cổ điển",
+"menu": "Menu trà chiều 2: Món ăn cổ điển",
 "items": [
     {
     "name": "Bánh Táo",

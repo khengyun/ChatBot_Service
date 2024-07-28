@@ -1,4 +1,4 @@
-"menu": "Bữa sáng 2: Món ăn Phương Tây yêu thích",
+"menu": "Menu bữa sáng 2: Món ăn Phương Tây yêu thích",
 "items": [
     {
     "name": "Burrito Bữa Sáng",

@@ -1,4 +1,4 @@
-"menu": "Bữa tối 1: Đặc sản Việt Nam",
+"menu": "Menu bữa tối 1: Đặc sản Việt Nam",
 "items": [
     {
     "name": "Bánh Xèo",

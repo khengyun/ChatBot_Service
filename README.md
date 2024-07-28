@@ -40,7 +40,13 @@ ollama pull llama3.1
 ```
 
 ## Create database
-Several example data located at `shop_data`. You can add your custom data.
+1. Put the name of your database and the data path in the .env file.
+```python
+CHROMA_PATH = "food_database"
+DATA_PATH = "shop_data"
+```
+
+2. Several example data located at `shop_data`. You can add your custom data.
 
 Create the Chroma DB.
 

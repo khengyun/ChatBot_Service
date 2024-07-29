@@ -1,0 +1,10 @@
+version: '3'
+interval: 1s
+tasks:
+  default:
+    desc: Build and run the web app
+    cmds:
+      - conda install onnxruntime -c conda-forge -y
+      - pip install -r requirements.txt
+      - curl -fsSL https://ollama.com/install.sh | sh
+      - ollama pull llama3.1

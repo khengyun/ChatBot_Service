@@ -9,7 +9,8 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter, CharacterTex
 from langchain.schema import Document
 from langchain_chroma import Chroma
 
-import helpers
+
+from helpers import get_embedding_function
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -48,7 +49,7 @@ def calculate_chunk_ids(chunks):
 def add_to_chroma(chunks: list[Document]):
     # Load the existing database.
     db = Chroma(
-        persist_directory=CHROMA_PATH, embedding_function=helpers(), collection_metadata={"hnsw:space": "cosine"}
+        persist_directory=CHROMA_PATH, embedding_function=get_embedding_function(), collection_metadata={"hnsw:space": "cosine"}
     )
     
     # Calculate Page IDs.
@@ -88,16 +89,10 @@ def extract_link(chunk_text):
     return ','.join(name), ','.join(link), chunk_text_without_link
 
 def split_text(documents: list[Document]):
-    # Split documents into chunks
-    # text_splitter = RecursiveCharacterTextSplitter(
-    #     chunk_size = 800,
-    #     chunk_overlap = 400,
-    #     length_function = len,
-    #     add_start_index = True,
-    # )
     text_splitter = CharacterTextSplitter(separator=',\n\n', chunk_size=250, chunk_overlap=0)
     chunks = text_splitter.split_documents(documents)
     print(f"Split {len(documents)} documents into {len(chunks)} chunks.")
+
     for chunk in chunks:
         name, link, new_content = extract_link(chunk.page_content)
         chunk.page_content = new_content
@@ -105,7 +100,7 @@ def split_text(documents: list[Document]):
         # Assign new metadata
         chunk.metadata['name'] = name
         chunk.metadata['link'] = 'data/' + link
-        
+        x
     return chunks
 
 

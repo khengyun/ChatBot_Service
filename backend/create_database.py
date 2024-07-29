@@ -86,7 +86,7 @@ def extract_link(chunk_text):
 
     chunk_text_without_link = re.sub(r'\s*(\n|$)', '', chunk_text_without_link)
 
-    return ','.join(name), ','.join(link), chunk_text_without_link
+    return ','.join(name), ',data/'.join(link), chunk_text_without_link
 
 def split_text(documents: list[Document]):
     text_splitter = CharacterTextSplitter(separator=',\n\n', chunk_size=250, chunk_overlap=0)
@@ -96,11 +96,12 @@ def split_text(documents: list[Document]):
     for chunk in chunks:
         name, link, new_content = extract_link(chunk.page_content)
         chunk.page_content = new_content
-
+        
         # Assign new metadata
         chunk.metadata['name'] = name
         chunk.metadata['link'] = 'data/' + link
-        x
+        print(chunk.metadata['link'])
+        
     return chunks
 
 

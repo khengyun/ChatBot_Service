@@ -4,8 +4,7 @@ import random
 import subprocess
 import gradio as gr
 
-from backend.query_data import query_rag
-from utility.chatbot_run import initialize_chatbot
+from backend.helpers import query_rag, initialize_chatbot
 
 def print_like_dislike(x: gr.LikeData):
     print(x.index, x.value, x.liked)

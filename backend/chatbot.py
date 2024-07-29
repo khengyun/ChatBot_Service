@@ -66,27 +66,7 @@ class ChatBot:
 
     # Load model from transformer pipeline
     def load_model(self):
-        # quantization_config = BitsAndBytesConfig(
-        #     load_in_4bit=True,
-        #     bnb_4bit_quant_type="nf4",
-        #     bnb_4bit_compute_dtype="float16",
-        #     bnb_4bit_use_double_quant=True
-        # )
-        # self.llm = HuggingFacePipeline.from_model_id(
-        #     model_id=self.model_id,
-        #     task="text-generation",
-        #     pipeline_kwargs=dict(
-        #         max_new_tokens=512, 
-        #         do_sample=True,
-        #         temperature = 0.3,
-        #         top_p = 0.9,
-        #         repetition_penalty=1.03,
-        #     ),
-        #     model_kwargs={"quantization_config": quantization_config,
-        #                   "low_cpu_mem_usage": True},
-        # )
 
-        # self.chat_model = ChatHuggingFace(llm=self.llm)
         self.chat_model = ChatOllama(model=self.model_id, temperature=0.2, top_k=10, top_p=0.5)
 
         self.trimmer = trim_messages(

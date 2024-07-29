@@ -9,7 +9,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter, CharacterTex
 from langchain.schema import Document
 from langchain_chroma import Chroma
 
-from utility import get_embedding_function
+import helpers
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -48,7 +48,7 @@ def calculate_chunk_ids(chunks):
 def add_to_chroma(chunks: list[Document]):
     # Load the existing database.
     db = Chroma(
-        persist_directory=CHROMA_PATH, embedding_function=get_embedding_function(), collection_metadata={"hnsw:space": "cosine"}
+        persist_directory=CHROMA_PATH, embedding_function=helpers(), collection_metadata={"hnsw:space": "cosine"}
     )
     
     # Calculate Page IDs.

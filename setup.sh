@@ -16,10 +16,10 @@ else
 fi
 
 
-# create enviroment conda 
-conda create -n chatbot python==3.12.* -y
-source activate base 
-conda activate chatbot
+# # create enviroment conda 
+# conda create -n chatbot python==3.12.* -y
+# source activate base 
+# conda activate chatbot
 
 echo "Run Task setup"
 task

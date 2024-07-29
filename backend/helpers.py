@@ -1,14 +1,42 @@
+import torch 
+
+from backend import ChatBot
+from langchain_huggingface import HuggingFaceEmbeddings
+
 import os
 import argparse
 
 from typing import List
 
 from langchain_chroma import Chroma
-from utility import get_embedding_function
+
+
 from dotenv import load_dotenv
 load_dotenv()
 
 CHROMA_PATH = os.getenv("CHROMA_PATH")
+
+
+def initialize_chatbot():
+    # Initialize chatbot, input prompt and get response
+    model = ChatBot(model_id="llama3.1")
+    
+    return model
+
+def get_embedding_function():
+    # model_name = "sentence-transformers/all-MiniLM-L6-v2"
+    # model_name = "google-bert/bert-base-multilingual-cased"
+    # model_name = "BAAI/bge-m3"
+    model_name = "sentence-transformers/all-MiniLM-L12-v2"
+    model_kwargs = {'device': 'cuda' if torch.cuda.is_available() else 'cpu'}
+    encode_kwargs = {'normalize_embeddings': False}
+    embedding_function = HuggingFaceEmbeddings(
+        model_name=model_name,
+        model_kwargs=model_kwargs,
+        encode_kwargs=encode_kwargs
+    )
+
+    return embedding_function
 
 def query_rag(query_text: str) -> str:
     # Prepare the DB.
@@ -27,6 +55,8 @@ def query_rag(query_text: str) -> str:
 
     print(results)
     return context_text, results
+
+
 
 def main():
     # Create CLI.

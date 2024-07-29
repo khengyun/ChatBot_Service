@@ -100,7 +100,6 @@ def split_text(documents: list[Document]):
         # Assign new metadata
         chunk.metadata['name'] = name
         chunk.metadata['link'] = 'data/' + link
-        print(chunk.metadata['link'])
         
     return chunks
 

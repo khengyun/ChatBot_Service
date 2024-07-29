@@ -13,3 +13,9 @@ tasks:
     desc: create chromadb
     cmds: 
       - python backend/create_database.py
+
+
+  run: 
+    desc: run chatbot 
+    cmds: 
+      - python app.py

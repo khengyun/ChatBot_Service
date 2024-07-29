@@ -5,7 +5,7 @@ import subprocess
 import gradio as gr
 
 from backend.query_data import query_rag
-from scripts.chatbot_run import initialize_chatbot
+from utility.chatbot_run import initialize_chatbot
 
 def print_like_dislike(x: gr.LikeData):
     print(x.index, x.value, x.liked)

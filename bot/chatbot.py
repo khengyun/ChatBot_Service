@@ -22,10 +22,6 @@ from langchain_core.chat_history import (
 )
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-"""
-This is a content from a user's input (image/video/pdf).
-Content: {content}
-"""
 GENERAL_PROMPT_TEMPLATE = """
 You are an AI assistant at K&K food store who always responds in Vietnamese! 
 Your role is to support, answer customers' questions and suggest related foods at store.
@@ -44,7 +40,6 @@ def get_session_history(session_id: str) -> BaseChatMessageHistory:
         if session_id not in store:
             store[session_id] = InMemoryChatMessageHistory()
         return store[session_id]
-
 
 class ChatBot:
     # Init chatbot from hugging face
@@ -95,7 +90,7 @@ class ChatBot:
         self.chat_model = ChatOllama(model=self.model_id, temperature=0.2, top_k=10, top_p=0.5)
 
         self.trimmer = trim_messages(
-            max_tokens=20000,
+            max_tokens=100000,
             strategy="last",
             token_counter=self.chat_model,
             include_system=True,
@@ -127,4 +122,5 @@ class ChatBot:
         #     config=config,
         # )
         store[session_id].messages = self.trimmer.invoke(store[session_id].messages)
+        print(store[session_id].messages)
         # return response.content

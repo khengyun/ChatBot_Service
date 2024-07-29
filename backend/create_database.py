@@ -19,8 +19,8 @@ DATA_PATH = os.getenv("DATA_PATH")
 
 def calculate_chunk_ids(chunks):
     '''
-    This will create IDs like "data/monopoly.pdf:6:2"
-    Page Source : Page Number : Chunk Index
+    This will create IDs like "data/monopoly.md:2"
+    Page Source : Chunk Index
     '''
 
     last_page_id = None
@@ -104,7 +104,7 @@ def split_text(documents: list[Document]):
 
         # Assign new metadata
         chunk.metadata['name'] = name
-        chunk.metadata['link'] = link
+        chunk.metadata['link'] = 'data/' + link
         
     return chunks
 

@@ -18,6 +18,7 @@ def add_message(history, message):
     return history
 
 def bot(history, message):
+    gallery = None
     file_type = None
     file_path_list = message['files']
     user_prompt = message['text']
@@ -34,12 +35,12 @@ def bot(history, message):
     
     # Update response in UI
     history += [[None,next(response_text)]]
-    yield history, gr.MultimodalTextbox(value=None, interactive=True)
+    yield history, gr.MultimodalTextbox(value=None, interactive=True), gallery
 
     for response in response_text:
         history[-1][1] += response
 
-        yield history, gr.MultimodalTextbox(value=None, interactive=True)
+        yield history, gr.MultimodalTextbox(value=None, interactive=True), gallery
 
     # Result: Response + sources
     sources = []
@@ -51,7 +52,7 @@ def bot(history, message):
         name = doc.metadata.get("name", None)
         
         sources.append(id)
-        if link != '' or name != '':
+        if link != '':
             links += link.split(',')
             names += name.split(',')
     links = list(dict.fromkeys(links))
@@ -61,38 +62,65 @@ def bot(history, message):
     print(names)
     
     history[-1][1] += f"\n\nSources: {sources}"
-    if len(names) > 0:
-        history += [[
-            None, 
-            gr.Gallery(
-                [
-                    [link, title] for link, title in zip(links, names)
-                ],
-                columns=5,  
-                rows=1,     
-                object_fit="contain", 
-                height="auto"
-            )
-        ]]
     
-    yield history, gr.MultimodalTextbox(value=None, interactive=True)
+    if len(names) > 0:
+        gallery = [[link, title] for link, title in zip(links, names)]
+        # history += [[
+        #     None, 
+        #     gallery
+        # ]]
+    
+    yield history, gr.MultimodalTextbox(value=None, interactive=True), gallery
+
+
+
+
+
+def fake_gan():
+    images = [
+        (random.choice(
+            [
+                "http://www.marketingtool.online/en/face-generator/img/faces/avatar-1151ce9f4b2043de0d2e3b7826127998.jpg",
+                "http://www.marketingtool.online/en/face-generator/img/faces/avatar-116b5e92936b766b7fdfc242649337f7.jpg",
+                "http://www.marketingtool.online/en/face-generator/img/faces/avatar-1163530ca19b5cebe1b002b8ec67b6fc.jpg",
+                "http://www.marketingtool.online/en/face-generator/img/faces/avatar-1116395d6e6a6581eef8b8038f4c8e55.jpg",
+                "http://www.marketingtool.online/en/face-generator/img/faces/avatar-11319be65db395d0e8e6855d18ddcef0.jpg",
+            ]
+        ), f"label {i}")
+        for i in range(5)
+    ]
+    return images
+
+
+
+
+
 
 
 with gr.Blocks(title="K&K's Bot", fill_height=True) as demo:
+
     # Initialize chatbot interface
     chatbot = gr.Chatbot(
         elem_id="chatbot",
         bubble_full_width=False,
         scale=1,
     )
+    
+
+
+    gallery = gr.Gallery(
+        label="Generated images", show_label=False, elem_id="gallery"
+    , columns=[5], rows=[1], object_fit="contain", height="auto")
+
     # Initialize textbox
     chat_input = gr.MultimodalTextbox(
         interactive=True,
         placeholder="Enter message or upload file...",
         show_label=False,
     )
+
     # Input Example
-    examples = gr.Examples(
+    gr.Examples(
         examples=[
             {'text': "Thông tin cửa hàng", 'files': []},
             {'text': "Menu bữa sáng", 'files': []},
@@ -107,9 +135,11 @@ with gr.Blocks(title="K&K's Bot", fill_height=True) as demo:
     chat_msg = chat_input.submit(
         add_message, [chatbot, chat_input], chatbot
     )
+
     bot_msg = chat_msg.then(
-        bot, [chatbot, chat_input], [chatbot, chat_input], api_name="bot_response"
+        bot, [chatbot, chat_input], [chatbot, chat_input, gallery], api_name="bot_response"
     )
+
     bot_msg.then(lambda: gr.MultimodalTextbox(interactive=True), None, [chat_input])
     chatbot.like(print_like_dislike, None, None)
 

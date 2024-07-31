@@ -53,16 +53,8 @@ class ChatBot:
 
     # Define prompt
     def get_prompt(self, context: str, question: str, information: str = None) -> List:
-        prompt_template = GENERAL_PROMPT_TEMPLATE.format(context_str=context)
 
-        self.messages = ChatPromptTemplate.from_messages(
-            [
-                SystemMessage(content=prompt_template),
-                MessagesPlaceholder(variable_name="human_message"),
-            ]
-        )
-        self.user_prompt = HumanMessage(content=question)
-
+        pass
 
     # Load model from transformer pipeline
     def load_model(self):
@@ -78,7 +70,19 @@ class ChatBot:
         )
 
     # Get response from chatbot
-    def get_response(self):
+    def get_response(self,context: str, question: str, information: str = None):
+
+        prompt_template = GENERAL_PROMPT_TEMPLATE.format(context_str=context)
+
+        self.messages = ChatPromptTemplate.from_messages(
+            [
+                SystemMessage(content=prompt_template),
+                MessagesPlaceholder(variable_name="human_message"),
+            ]
+        )
+        self.user_prompt = HumanMessage(content=question)
+
+
         session_id = config['configurable']['session_id']
         chain = (
             RunnablePassthrough.assign(messages=itemgetter("human_message") | self.trimmer)

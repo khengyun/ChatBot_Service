@@ -5,6 +5,16 @@ import subprocess
 import gradio as gr
 
 from backend.helpers import query_rag, initialize_chatbot
+from backend.chatbot import ChatBot
+
+
+
+
+
+
+
+# Initialize chatbot once
+chatbotllm = ChatBot(model_id="llama3.1")
 
 def print_like_dislike(x: gr.LikeData):
     print(x.index, x.value, x.liked)
@@ -25,16 +35,11 @@ def bot(history, message):
     # Retrieve relevant context
     context_text, retrieval_results  = query_rag(user_prompt)
 
-    # Initialize chatbot then get response
-    chatbot = initialize_chatbot()
-    chatbot.get_prompt(
-            context_text, 
-            user_prompt, 
-            )
-    response_text = chatbot.get_response()
+    # Assuming get_response handles context and user prompt
+    response_text = chatbotllm.get_response(context_text, user_prompt)
     
     # Update response in UI
-    history += [[None,next(response_text)]]
+    history += [[None, next(response_text)]]
     yield history, gr.MultimodalTextbox(value=None, interactive=True), gallery
 
     for response in response_text:
@@ -52,7 +57,7 @@ def bot(history, message):
         name = doc.metadata.get("name", None)
         
         sources.append(id)
-        if link != '':
+        if link != '' and name!= "":
             links += link.split(',')
             names += name.split(',')
     links = list(dict.fromkeys(links))
@@ -72,10 +77,6 @@ def bot(history, message):
     
     yield history, gr.MultimodalTextbox(value=None, interactive=True), gallery
 
-
-
-
-
 def fake_gan():
     images = [
         (random.choice(
@@ -91,13 +92,8 @@ def fake_gan():
     ]
     return images
 
-
-
-
-
-
-
 with gr.Blocks(title="K&K's Bot", fill_height=True) as demo:
+    
 
     # Initialize chatbot interface
     chatbot = gr.Chatbot(
@@ -105,11 +101,9 @@ with gr.Blocks(title="K&K's Bot", fill_height=True) as demo:
         bubble_full_width=False,
         scale=1,
     )
-    
-
 
     gallery = gr.Gallery(
-        label="Generated images", show_label=False, elem_id="gallery"
+        label="images", show_label=False, elem_id="gallery"
     , columns=[5], rows=[1], object_fit="contain", height="auto")
 
     # Initialize textbox
@@ -119,7 +113,7 @@ with gr.Blocks(title="K&K's Bot", fill_height=True) as demo:
         show_label=False,
     )
 
-    # Input Example
+
     gr.Examples(
         examples=[
             {'text': "Thông tin cửa hàng", 'files': []},

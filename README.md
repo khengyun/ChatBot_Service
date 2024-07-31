@@ -11,6 +11,7 @@ conda create --name [environment-name] python==3.12.*
 ```
 
 2. Setting up the Environment on Ubuntu
+
 To set up the environment, Ubuntu users can simply execute the following command:
 ```python
 ./setup.sh

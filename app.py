@@ -63,17 +63,10 @@ def bot(history, message):
     links = list(dict.fromkeys(links))
     names = list(dict.fromkeys(names))
 
-    print(links)
-    print(names)
-    
     history[-1][1] += f"\n\nSources: {sources}"
     
     if len(names) > 0:
         gallery = [[link, title] for link, title in zip(links, names)]
-        # history += [[
-        #     None, 
-        #     gallery
-        # ]]
     
     yield history, gr.MultimodalTextbox(value=None, interactive=True), gallery
 

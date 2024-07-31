@@ -21,18 +21,7 @@ from langchain_core.chat_history import (
     InMemoryChatMessageHistory,
 )
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-
-GENERAL_PROMPT_TEMPLATE = """
-You are an AI assistant at K&K food store who always responds in Vietnamese! 
-Your role is to support, answer customers' questions and suggest related foods at store.
-
-Below are some relevant contexts of a question from a user. 
-Contexts: {context_str}
-
-Answer the question given the information in those contexts and the content. 
-If relevant contexts are None, just answer normally.
-If you cannot find the answer to the question, say "I don't know" in Vietnamese.
-"""
+from backend.prompt.prompts import GENERAL_PROMPT_TEMPLATE
 
 store = {}
 config = {"configurable": {"session_id": "koi1"}}
@@ -101,10 +90,4 @@ class ChatBot:
         ):
             yield r.content
 
-        # response = with_message_history.invoke(
-        #     {"human_message": [self.user_prompt]},
-        #     config=config,
-        # )
         store[session_id].messages = self.trimmer.invoke(store[session_id].messages)
-        print(store[session_id].messages)
-        # return response.content

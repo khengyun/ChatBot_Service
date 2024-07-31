@@ -53,5 +53,4 @@ def query_rag(query_text: str) -> str:
     else:
         context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
 
-    print(results)
     return context_text, results

@@ -1,5 +1,3 @@
-
-
 import re, os, sys
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, parent_dir)
@@ -192,7 +190,9 @@ def generate_data_store():
     # add_to_chroma(chunks)
 
     chunks = split_text(documents)
+    
     add_to_chroma(chunks)
+
 
 
 

@@ -52,50 +52,18 @@ def bot(history, message):
         name = doc.metadata.get("name", None)
         
         sources.append(id)
-        if link != '':
+        if link != '' and name != '':
             links += link.split(',')
             names += name.split(',')
     links = list(dict.fromkeys(links))
     names = list(dict.fromkeys(names))
 
-    print(links)
-    print(names)
-    
     history[-1][1] += f"\n\nSources: {sources}"
     
     if len(names) > 0:
         gallery = [[link, title] for link, title in zip(links, names)]
-        # history += [[
-        #     None, 
-        #     gallery
-        # ]]
     
     yield history, gr.MultimodalTextbox(value=None, interactive=True), gallery
-
-
-
-
-
-def fake_gan():
-    images = [
-        (random.choice(
-            [
-                "http://www.marketingtool.online/en/face-generator/img/faces/avatar-1151ce9f4b2043de0d2e3b7826127998.jpg",
-                "http://www.marketingtool.online/en/face-generator/img/faces/avatar-116b5e92936b766b7fdfc242649337f7.jpg",
-                "http://www.marketingtool.online/en/face-generator/img/faces/avatar-1163530ca19b5cebe1b002b8ec67b6fc.jpg",
-                "http://www.marketingtool.online/en/face-generator/img/faces/avatar-1116395d6e6a6581eef8b8038f4c8e55.jpg",
-                "http://www.marketingtool.online/en/face-generator/img/faces/avatar-11319be65db395d0e8e6855d18ddcef0.jpg",
-            ]
-        ), f"label {i}")
-        for i in range(5)
-    ]
-    return images
-
-
-
-
-
-
 
 with gr.Blocks(title="K&K's Bot", fill_height=True) as demo:
 
@@ -106,11 +74,9 @@ with gr.Blocks(title="K&K's Bot", fill_height=True) as demo:
         scale=1,
     )
     
-
-
     gallery = gr.Gallery(
-        label="Generated images", show_label=False, elem_id="gallery"
-    , columns=[5], rows=[1], object_fit="contain", height="auto")
+        label="Food Images", show_label=True, elem_id="gallery"
+    , columns=[6], object_fit="contain", height="auto")
 
     # Initialize textbox
     chat_input = gr.MultimodalTextbox(

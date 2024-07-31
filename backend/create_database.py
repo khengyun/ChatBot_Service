@@ -1,5 +1,3 @@
-
-
 import re, os, sys
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, parent_dir)
@@ -114,10 +112,13 @@ def load_documents():
     
     return final_documents
 
+
 def generate_data_store():
     documents = load_documents()
     chunks = split_text(documents)
+    
     add_to_chroma(chunks)
+
 
 if __name__ == "__main__":
     generate_data_store()

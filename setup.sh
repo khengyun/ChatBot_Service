@@ -32,4 +32,4 @@ ollama pull llama3.1
 
 
 # load create database
-python backend/create_database.py
+task db

@@ -1,7 +1,7 @@
 # Simple_FoodStore_RAG_LLM_Service
 
 ## Introduction 
-In this project, we will develop an AI assistant to assist customers at a food store. The **RAG code** has been modified from [this repo](https://github.com/pixegami/langchain-rag-tutorial) and the remaining code was entirely written by **Khôi** and **Khang**.
+In this project, we will develop an AI assistant to assist customers at a food store. The **RAG code** has been modified from [this repo](https://github.com/pixegami/langchain-rag-tutorial) and the remaining code was entirely written by **Khôi**, **Khuy** and **Khang**.
 
 ## Install dependencies
 
